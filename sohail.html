@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monthly Salary Record</title>
+    <style>
+     body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: center; /* Center content horizontally */
+            overflow: hidden; /* Hide scrollbars when content fits within the viewport */
+        }
+
+        .navbar {
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 70px;
+}
+
+        .navbar a {
+            display: block;
+            font-size: 16px;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        .navbar a:hover {
+            background-color: #555;
+        }
+
+        .content {
+            width: 80%;
+            max-width: 600px; /* Adjust this as needed */
+            margin: 20px auto; /* Center content vertically and horizontally */
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        form {
+  background: #fff;
+  padding: 99px;
+  border: 1px solid #ccc;
+  border-radius: 70px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            color: #555;
+        }
+
+        .fil {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        .fil:focus {
+            border: 1px solid #333;
+        }
+
+        .click {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .click:hover {
+            background-color: #555;
+        }
+
+        textarea.fil {
+            resize: vertical; /* Allow vertical resizing of textarea */
+        }
+
+        p {
+            font-size: 10px;
+            color: #666;
+            margin: 6px;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                width: 100px; /* Adjust as needed */
+            }
+
+            .navbar a {
+                padding: 10px;
+            }
+
+            .content {
+                width: 100%;
+                padding: 10px;
+                margin-left: 0;
+                margin-top: 60px; /* Create space below the fixed navbar */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                width: 75px;
+    border-radius: 26px;
+            }
+        }
+        .loading-overlay {
+            display: none; /* Hide by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            z-index: 999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loading-symbol {
+            font-size: 36px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+    </div>
+
+    <div class="content">
+        <form method="post" action="" name="product" id="product">
+            <h1>Monthly Salary Record</h1>
+
+            <label for="date">Date</label>
+            <input class="fil" type="date" name="date" required>
+
+            <label for="price">Rate</label>
+            <input class="fil" type="number" name="price" required>
+
+            <label for="description">For What</label>
+            <textarea class="fil" name="description" required></textarea>
+
+            <button class="click" id="submit-button">Submit &#10132;</button>
+
+            <p>Mohammad Sohail</p>
+        </form>
+    </div>
+    
+    <!-- Loading overlay with a loading symbol -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-symbol">Loading...</div>
+    </div>
+
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzWSHl65JcTpl7UcMfgMYu7XtaNbz3eyydu_RxGQfy--Y-juBXCpadVWGen6NULIkDuKA/exec';
+        const form = document.forms['product'];
+        const loadingOverlay = document.getElementById('loading-overlay');
+        const submitButton = document.getElementById('submit-button');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+
+            // Show the loading overlay
+            loadingOverlay.style.display = 'flex';
+
+            fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+                .then(response => {
+                    // Hide the loading overlay
+                    loadingOverlay.style.display = 'none';
+
+                    alert("Thank you! your form is submitted successfully.");
+                })
+                .then(() => { window.location.reload(); })
+                .catch(error => {
+                    // Hide the loading overlay on error
+                    loadingOverlay.style.display = 'none';
+
+                    console.error('Error!', error.message);
+                })
+        });
+
+        // Hide the loading overlay on page load
+        loadingOverlay.style.display = 'none';
+    </script>
+</body>
+</html>
